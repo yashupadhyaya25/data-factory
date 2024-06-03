@@ -1,0 +1,28 @@
+{
+	"name": "dev_snowflake",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"database": {
+				"type": "string"
+			},
+			"warehouse": {
+				"type": "string"
+			},
+			"role": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SnowflakeV2",
+		"typeProperties": {
+			"authenticationType": "Basic",
+			"accountIdentifier": "ipixsht-tz79747",
+			"user": "Yash",
+			"database": "@{linkedService().database}",
+			"warehouse": "@{linkedService().warehouse}",
+			"role": "@{linkedService().role}",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDkwOTJENTYzLUU5RjYtNDM3My1BRDg1LTk2RkQxMTdBNjE5QV85YzQ0OGFjNS04ZjgzLTQzOWEtOGFhNC0xMTNhM2RkZmFlYWEiDQp9"
+		}
+	}
+}
