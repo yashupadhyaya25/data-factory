@@ -5,7 +5,20 @@
 			{
 				"name": "Sales Table",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Check in watermark table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Check in source table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -17,6 +30,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SnowflakeV2Source",
+						"query": {
+							"value": "@concat(\n    'SELECT * FROM DATACART.PUBLIC.ORDERS WHERE LOAD_DATE >=',\n    activity('Check in watermark table').output.firstRow\n    )",
+							"type": "Expression"
+						},
 						"exportSettings": {
 							"type": "SnowflakeExportCopyCommand"
 						}
@@ -97,6 +114,42 @@
 					"source": {
 						"type": "SnowflakeV2Source",
 						"query": "select LOAD_DATE from DATACART.PUBLIC.WARTERMARK where TABLE_NAME = 'ORDERS';",
+						"exportSettings": {
+							"type": "SnowflakeExportCopyCommand"
+						}
+					},
+					"dataset": {
+						"referenceName": "SNOWFLAKE_DB",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "DATACART",
+							"warehouse": "COMPUTE_WH",
+							"role": "ACCOUNTADMIN",
+							"schema": "PUBLIC",
+							"table_name": "WARTERMARK "
+						}
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Check in source table",
+				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SnowflakeV2Source",
+						"query": "SELECT max(load_date) from DATACART.PUBLIC.ORDERS;",
 						"exportSettings": {
 							"type": "SnowflakeExportCopyCommand"
 						}
