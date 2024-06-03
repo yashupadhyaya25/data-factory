@@ -33,52 +33,7 @@
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "USERID",
-									"type": "Decimal"
-								},
-								"sink": {
-									"name": "USERID",
-									"type": "Decimal"
-								}
-							},
-							{
-								"source": {
-									"name": "ORDERDATE",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "ORDERDATE",
-									"type": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"name": "ORDERID",
-									"type": "Decimal"
-								},
-								"sink": {
-									"name": "ORDERID",
-									"type": "Decimal"
-								}
-							},
-							{
-								"source": {
-									"name": "AMOUNTINFO",
-									"type": "Double"
-								},
-								"sink": {
-									"name": "AMOUNTINFO",
-									"type": "Double"
-								}
-							}
-						]
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
