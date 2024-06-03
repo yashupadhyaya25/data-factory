@@ -1,5 +1,5 @@
 {
-	"name": "Parquet",
+	"name": "BLOB_PARQUET",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Storage_ADLS",
