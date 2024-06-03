@@ -120,7 +120,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "dev_db",
+						"referenceName": "SNOWFLAKE_DB",
 						"type": "DatasetReference",
 						"parameters": {
 							"database": {

@@ -1,5 +1,5 @@
 {
-	"name": "dev_db",
+	"name": "SNOWFLAKE_DB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dev_snowflake",
