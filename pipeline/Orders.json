@@ -190,8 +190,8 @@
 					"type": "LinkedServiceReference",
 					"parameters": {
 						"database": "DATACART",
-						"warehouse": " COMPUTE_WH",
-						"role": " ACCOUNT_ADMIN"
+						"warehouse": "COMPUTE_WH",
+						"role": "ACCOUNT_ADMIN"
 					}
 				},
 				"typeProperties": {
