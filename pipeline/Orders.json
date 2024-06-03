@@ -129,25 +129,32 @@
 		],
 		"parameters": {
 			"database": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "DATACART"
 			},
 			"role": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ACCOUNTADMIN"
 			},
 			"warehouse": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "COMPUTE_WH"
 			},
 			"schema": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "PUBLIC"
 			},
 			"table": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ORDERS"
 			},
 			"blob_container": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "sales"
 			},
 			"order_folder_path": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "orders"
 			}
 		},
 		"annotations": []
