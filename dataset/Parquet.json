@@ -1,5 +1,5 @@
 {
-	"name": "Parquet_with_header",
+	"name": "Parquet",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Storage_ADLS",

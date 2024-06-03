@@ -62,7 +62,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Parquet_with_header",
+						"referenceName": "Parquet",
 						"type": "DatasetReference"
 					}
 				]
