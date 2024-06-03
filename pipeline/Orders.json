@@ -199,7 +199,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat(\n    'CALL DATACART.PUBLIC.UPDATE_WATERMARK(',\n    'ORDERS',\n    activity('Check in watermark table').output.firstRow.watermark,\n    ');'\n)",
+								"value": "@concat(\n    'CALL DATACART.PUBLIC.UPDATE_WATERMARK(',\n    'ORDERS',\n    activity('Get Latest watermark value').output.firstRow.WATERMARK,\n    ');'\n)",
 								"type": "Expression"
 							}
 						}
