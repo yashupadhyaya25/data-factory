@@ -18,7 +18,10 @@
 					"source": {
 						"type": "SnowflakeV2Source",
 						"exportSettings": {
-							"type": "SnowflakeExportCopyCommand"
+							"type": "SnowflakeExportCopyCommand",
+							"additionalCopyOptions": {
+								"OVERWRITE": "TRUE"
+							}
 						}
 					},
 					"sink": {
