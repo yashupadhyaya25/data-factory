@@ -1,0 +1,12 @@
+{
+	"name": "Sales_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dev_snowflake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": []
+	}
+}
