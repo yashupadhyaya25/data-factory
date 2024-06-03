@@ -1,0 +1,9 @@
+{
+	"name": "yu-dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e79e40d1-ce31-409d-ba47-336dd9ee463a",
+		"tenantId": "9d58bcf7-d57d-4b5e-abdc-9cfd0be5599a"
+	}
+}
