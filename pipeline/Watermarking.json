@@ -1,0 +1,243 @@
+{
+	"name": "Watermarking",
+	"properties": {
+		"activities": [
+			{
+				"name": "Sales Table",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Check in watermark table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Get Latest watermark value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SnowflakeV2Source",
+						"query": {
+							"value": "@concat(\n    'SELECT * FROM DATACART.PUBLIC.ORDERS WHERE LOAD_DATE >',decodeUriComponent('%27'),\n    activity('Check in watermark table').output.firstRow.LOAD_DATE,decodeUriComponent('%27')\n    )",
+							"type": "Expression"
+						},
+						"exportSettings": {
+							"type": "SnowflakeExportCopyCommand"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SNOWFLAKE_DB",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": {
+								"value": "@pipeline().parameters.database",
+								"type": "Expression"
+							},
+							"warehouse": {
+								"value": "@pipeline().parameters.warehouse",
+								"type": "Expression"
+							},
+							"role": {
+								"value": "@pipeline().parameters.role",
+								"type": "Expression"
+							},
+							"schema": {
+								"value": "@pipeline().parameters.schema",
+								"type": "Expression"
+							},
+							"table_name": {
+								"value": "@pipeline().parameters.table",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_PARQUET",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.blob_container",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@pipeline().parameters.order_folder_path",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('orders_',utcnow(),'.parquet')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Check in watermark table",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SnowflakeV2Source",
+						"query": "select LOAD_DATE from DATACART.PUBLIC.WARTERMARK where TABLE_NAME = 'ORDERS';",
+						"exportSettings": {
+							"type": "SnowflakeExportCopyCommand"
+						}
+					},
+					"dataset": {
+						"referenceName": "SNOWFLAKE_DB",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "DATACART",
+							"warehouse": "COMPUTE_WH",
+							"role": "ACCOUNTADMIN",
+							"schema": "PUBLIC",
+							"table_name": "WARTERMARK "
+						}
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Get Latest watermark value",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SnowflakeV2Source",
+						"query": "SELECT max(load_date) as watermark from DATACART.PUBLIC.ORDERS;",
+						"exportSettings": {
+							"type": "SnowflakeExportCopyCommand"
+						}
+					},
+					"dataset": {
+						"referenceName": "SNOWFLAKE_DB",
+						"type": "DatasetReference",
+						"parameters": {
+							"database": "DATACART",
+							"warehouse": "COMPUTE_WH",
+							"role": "ACCOUNTADMIN",
+							"schema": "PUBLIC",
+							"table_name": "WARTERMARK "
+						}
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Update Watermark Value",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Sales Table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DATACART",
+						"warehouse": "COMPUTE_WH",
+						"role": "ACCOUNTADMIN"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "@concat(\n    'CALL DATACART.PUBLIC.UPDATE_WATERMARK(',\n    decodeUriComponent('%27'),'ORDERS',decodeUriComponent('%27'),',',\n    decodeUriComponent('%27'),activity('Get Latest watermark value').output.firstRow.WATERMARK,decodeUriComponent('%27'),\n    ');'\n)",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"parameters": {
+			"database": {
+				"type": "string",
+				"defaultValue": "DATACART"
+			},
+			"role": {
+				"type": "string",
+				"defaultValue": "ACCOUNTADMIN"
+			},
+			"warehouse": {
+				"type": "string",
+				"defaultValue": "COMPUTE_WH"
+			},
+			"schema": {
+				"type": "string",
+				"defaultValue": "PUBLIC"
+			},
+			"table": {
+				"type": "string",
+				"defaultValue": "ORDERS"
+			},
+			"blob_container": {
+				"type": "string",
+				"defaultValue": "sales"
+			},
+			"order_folder_path": {
+				"type": "string",
+				"defaultValue": "orders"
+			}
+		},
+		"annotations": []
+	}
+}

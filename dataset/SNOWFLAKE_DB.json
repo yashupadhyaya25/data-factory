@@ -1,0 +1,53 @@
+{
+	"name": "SNOWFLAKE_DB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dev_snowflake",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				},
+				"warehouse": {
+					"value": "@dataset().warehouse",
+					"type": "Expression"
+				},
+				"role": {
+					"value": "@dataset().role",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"database": {
+				"type": "string"
+			},
+			"warehouse": {
+				"type": "string"
+			},
+			"role": {
+				"type": "string"
+			},
+			"schema": {
+				"type": "string"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
