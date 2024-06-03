@@ -5,6 +5,17 @@
 			"referenceName": "dev_snowflake",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"database": {
+				"type": "string"
+			},
+			"warehouse": {
+				"type": "string"
+			},
+			"role": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SnowflakeV2Table",
 		"schema": []
