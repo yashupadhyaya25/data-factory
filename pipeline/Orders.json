@@ -18,10 +18,7 @@
 					"source": {
 						"type": "SnowflakeV2Source",
 						"exportSettings": {
-							"type": "SnowflakeExportCopyCommand",
-							"additionalFormatOptions": {
-								"DATE_FORMAT": "'YYYY-MM-DD'"
-							}
+							"type": "SnowflakeExportCopyCommand"
 						}
 					},
 					"sink": {
