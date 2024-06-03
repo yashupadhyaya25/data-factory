@@ -31,7 +31,7 @@
 					"source": {
 						"type": "SnowflakeV2Source",
 						"query": {
-							"value": "@concat(\n    'SELECT * FROM DATACART.PUBLIC.ORDERS WHERE LOAD_DATE >=',\n    replace(activity('Check in watermark table').output.firstRow.LOAD_DATE,'\"','''')\n    )",
+							"value": "@concat(\n    'SELECT * FROM DATACART.PUBLIC.ORDERS WHERE LOAD_DATE >=',\n    replace(activity('Check in watermark table').output.firstRow.LOAD_DATE,'\"',decodeUriComponent('%27'))\n    )",
 							"type": "Expression"
 						},
 						"exportSettings": {
