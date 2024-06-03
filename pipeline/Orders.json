@@ -191,7 +191,7 @@
 					"parameters": {
 						"database": "DATACART",
 						"warehouse": "COMPUTE_WH",
-						"role": "ACCOUNT_ADMIN"
+						"role": "ACCOUNTADMIN"
 					}
 				},
 				"typeProperties": {
