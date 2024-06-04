@@ -56,7 +56,7 @@
 					},
 					"activities": [
 						{
-							"name": "Get Metadata1",
+							"name": "Get File Name from Folder",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
