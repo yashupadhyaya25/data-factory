@@ -53,9 +53,10 @@
 						"value": "@activity('Get Folder Name From Blob').output.childItems",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
-							"name": "Get Metadata1",
+							"name": "Get Files From Folder",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -96,7 +97,7 @@
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata1",
+									"activity": "Get Files From Folder",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -115,6 +116,10 @@
 								"parameters": {
 									"folder_name": {
 										"value": "@item().name",
+										"type": "Expression"
+									},
+									"files": {
+										"value": "@activity('Get Files From Folder').output.childItems",
 										"type": "Expression"
 									}
 								}
