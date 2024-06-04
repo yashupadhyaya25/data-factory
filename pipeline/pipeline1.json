@@ -30,7 +30,10 @@
 							}
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"itemName",
+						"lastModified"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
