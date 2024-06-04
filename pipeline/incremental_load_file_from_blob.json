@@ -75,8 +75,7 @@
 										"folder_path": {
 											"value": "@item().name",
 											"type": "Expression"
-										},
-										"file_name": "*.csv"
+										}
 									}
 								},
 								"fieldList": [
