@@ -170,7 +170,7 @@
 									"referenceName": "BLOB_CSV",
 									"type": "DatasetReference",
 									"parameters": {
-										"container_name": "new_files",
+										"container_name": "incremental",
 										"folder_path": {
 											"value": "@item().name",
 											"type": "Expression"
