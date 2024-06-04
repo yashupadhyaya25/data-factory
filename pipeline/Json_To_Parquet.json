@@ -1,0 +1,122 @@
+{
+	"name": "Json_To_Parquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Json To Parquet",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['batters']['batter'][0]['id']"
+								},
+								"sink": {
+									"name": "batters_batter'][0]['id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['batters']['batter'][0]['type']"
+								},
+								"sink": {
+									"name": "batters_batter'][0]['type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['type']"
+								},
+								"sink": {
+									"name": "type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['name']"
+								},
+								"sink": {
+									"name": "name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['ppu']"
+								},
+								"sink": {
+									"name": "ppu"
+								}
+							}
+						],
+						"collectionReference": "",
+						"mapComplexValuesToString": false
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "json",
+							"folder_path": " ",
+							"file_name": "nested.json"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_PARQUET",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "sales",
+							"folder_path": "flatten_json",
+							"file_name": "flatten_json.parquet"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
