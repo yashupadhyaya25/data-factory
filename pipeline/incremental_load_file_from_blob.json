@@ -76,7 +76,7 @@
 											"value": "@item().name",
 											"type": "Expression"
 										},
-										"file_name": " "
+										"file_name": "*.*"
 									}
 								},
 								"fieldList": [
