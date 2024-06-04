@@ -42,6 +42,22 @@
 						"mappings": [
 							{
 								"source": {
+									"path": "$['batters']['batter'][0]['id']"
+								},
+								"sink": {
+									"name": "batters_batter'][0]['id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['batters']['batter'][0]['type']"
+								},
+								"sink": {
+									"name": "batters_batter'][0]['type"
+								}
+							},
+							{
+								"source": {
 									"path": "$['id']"
 								},
 								"sink": {
@@ -70,14 +86,6 @@
 								},
 								"sink": {
 									"name": "ppu"
-								}
-							},
-							{
-								"source": {
-									"path": "$['batters']['batter']['id']"
-								},
-								"sink": {
-									"name": "batter_id"
 								}
 							}
 						],
