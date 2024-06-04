@@ -12,6 +12,7 @@
 						"value": "@pipeline().parameters.files",
 						"type": "Expression"
 					},
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Get Metadata1",
