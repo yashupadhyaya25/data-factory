@@ -8,6 +8,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.files",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Get Metadata1",
@@ -56,6 +60,14 @@
 		"parameters": {
 			"folder_name": {
 				"type": "string"
+			},
+			"files": {
+				"type": "array"
+			}
+		},
+		"variables": {
+			"files": {
+				"type": "Array"
 			}
 		},
 		"annotations": []
