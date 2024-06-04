@@ -17,7 +17,18 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "BLOB_CSV",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "incremental",
+							"folder_path": {
+								"value": "@pipeline().parameters.folder",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.file_name",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [],
 					"storeSettings": {
@@ -32,6 +43,9 @@
 		],
 		"parameters": {
 			"file_name": {
+				"type": "string"
+			},
+			"folder": {
 				"type": "string"
 			}
 		},
