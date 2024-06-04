@@ -118,6 +118,10 @@
 									"file_name": {
 										"value": "@activity('Get File Name from Folder').output.childItems",
 										"type": "Expression"
+									},
+									"folder": {
+										"value": "@item().name",
+										"type": "Expression"
 									}
 								}
 							}
