@@ -49,6 +49,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Folder Name From Blob').output.childItems",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "Get Metadata1",
