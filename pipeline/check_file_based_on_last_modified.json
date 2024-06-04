@@ -182,7 +182,7 @@
 												{
 													"type": "Query",
 													"text": {
-														"value": "@concat(\n    'INSERT INTO FILE_LOAD (FOLDER_NAME,FILE_NAME,LOAD_TIME) VALUES (',decodeBase64('%27'),\n    pipeline().parameters.folder_name,item().name,utcnow(),decodeBase64('%27'),')'\n)",
+														"value": "@concat(\n    'INSERT INTO FILE_LOAD (FOLDER_NAME,FILE_NAME,LOAD_TIME) VALUES (',\n    decodeUriComponent('%27'),pipeline().parameters.folder_name,decodeUriComponent('%27'),',',\n    decodeUriComponent('%27'),item().name,decodeUriComponent('%27'),',',\n    utcnow(),decodeUriComponent('%27'),')'\n)",
 														"type": "Expression"
 													}
 												}
