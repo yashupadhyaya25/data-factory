@@ -74,38 +74,15 @@
 							},
 							{
 								"source": {
-									"path": "$['batters']['batter'][0]['id']"
+									"path": "$['batters']['batter']['id']"
 								},
 								"sink": {
-									"name": "batters_batter_id"
-								}
-							},
-							{
-								"source": {
-									"path": "$['batters']['batter'][0]['type']"
-								},
-								"sink": {
-									"name": "batters_batter_type"
-								}
-							},
-							{
-								"source": {
-									"path": "$['topping'][0]['id']"
-								},
-								"sink": {
-									"name": "topping_id"
-								}
-							},
-							{
-								"source": {
-									"path": "$['topping'][0]['type']"
-								},
-								"sink": {
-									"name": "topping_type"
+									"name": "batter_id"
 								}
 							}
 						],
-						"collectionReference": ""
+						"collectionReference": "",
+						"mapComplexValuesToString": false
 					}
 				},
 				"inputs": [
