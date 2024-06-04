@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Get Folder Name From Blob",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -25,7 +25,7 @@
 						}
 					},
 					"fieldList": [
-						"itemName"
+						"childItems"
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
