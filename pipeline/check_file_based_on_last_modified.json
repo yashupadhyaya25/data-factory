@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "check_file_based_on_last_modified",
 	"properties": {
 		"activities": [
 			{
@@ -167,6 +167,9 @@
 			"files": {
 				"type": "Array"
 			}
+		},
+		"folder": {
+			"name": "incremental_load_file"
 		},
 		"annotations": []
 	}

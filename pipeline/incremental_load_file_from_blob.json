@@ -109,7 +109,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "pipeline1",
+									"referenceName": "check_file_based_on_last_modified",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
@@ -129,6 +129,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "incremental_load_file"
+		},
 		"annotations": []
 	}
 }
