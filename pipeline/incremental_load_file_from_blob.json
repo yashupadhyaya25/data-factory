@@ -81,7 +81,8 @@
 									}
 								},
 								"fieldList": [
-									"childItems"
+									"childItems",
+									"lastModified"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
@@ -112,7 +113,13 @@
 									"referenceName": "pipeline1",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"file_name": {
+										"value": "@activity('Get File Name from Folder').output.childItems",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
