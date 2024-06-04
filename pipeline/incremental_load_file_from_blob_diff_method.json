@@ -54,7 +54,7 @@
 						"value": "@activity('Get Folder Name From Blob').output.childItems",
 						"type": "Expression"
 					},
-					"isSequential": false,
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Get Files From Folder",
