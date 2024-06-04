@@ -1,0 +1,1336 @@
+{
+	"name": "Json_To_Parquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Json To Parquet",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['created_at']"
+								},
+								"sink": {
+									"name": "created_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id_str']"
+								},
+								"sink": {
+									"name": "id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['text']"
+								},
+								"sink": {
+									"name": "text"
+								}
+							},
+							{
+								"source": {
+									"path": "$['truncated']"
+								},
+								"sink": {
+									"name": "truncated"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['hashtags'][0]['text']"
+								},
+								"sink": {
+									"name": "entities_hashtags'][0]['text"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['hashtags'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "entities_hashtags'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['symbols'][0]"
+								},
+								"sink": {
+									"name": "entities_symbols']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['user_mentions'][0]['screen_name']"
+								},
+								"sink": {
+									"name": "entities_user_mentions'][0]['screen_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['user_mentions'][0]['name']"
+								},
+								"sink": {
+									"name": "entities_user_mentions'][0]['name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['user_mentions'][0]['id']"
+								},
+								"sink": {
+									"name": "entities_user_mentions'][0]['id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['user_mentions'][0]['id_str']"
+								},
+								"sink": {
+									"name": "entities_user_mentions'][0]['id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['user_mentions'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "entities_user_mentions'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['entities']['urls'][0]"
+								},
+								"sink": {
+									"name": "entities_urls']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['metadata']['iso_language_code']"
+								},
+								"sink": {
+									"name": "metadata_iso_language_code"
+								}
+							},
+							{
+								"source": {
+									"path": "$['metadata']['result_type']"
+								},
+								"sink": {
+									"name": "metadata_result_type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['source']"
+								},
+								"sink": {
+									"name": "source"
+								}
+							},
+							{
+								"source": {
+									"path": "$['in_reply_to_status_id']"
+								},
+								"sink": {
+									"name": "in_reply_to_status_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['in_reply_to_status_id_str']"
+								},
+								"sink": {
+									"name": "in_reply_to_status_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['in_reply_to_user_id']"
+								},
+								"sink": {
+									"name": "in_reply_to_user_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['in_reply_to_user_id_str']"
+								},
+								"sink": {
+									"name": "in_reply_to_user_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['in_reply_to_screen_name']"
+								},
+								"sink": {
+									"name": "in_reply_to_screen_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['id']"
+								},
+								"sink": {
+									"name": "user_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['id_str']"
+								},
+								"sink": {
+									"name": "user_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['name']"
+								},
+								"sink": {
+									"name": "user_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['screen_name']"
+								},
+								"sink": {
+									"name": "user_screen_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['location']"
+								},
+								"sink": {
+									"name": "user_location"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['description']"
+								},
+								"sink": {
+									"name": "user_description"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['url']"
+								},
+								"sink": {
+									"name": "user_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['entities']['url']['urls'][0]['url']"
+								},
+								"sink": {
+									"name": "user_entities_url_urls'][0]['url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['entities']['url']['urls'][0]['expanded_url']"
+								},
+								"sink": {
+									"name": "user_entities_url_urls'][0]['expanded_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['entities']['url']['urls'][0]['display_url']"
+								},
+								"sink": {
+									"name": "user_entities_url_urls'][0]['display_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['entities']['url']['urls'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "user_entities_url_urls'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['entities']['description']['urls'][0]"
+								},
+								"sink": {
+									"name": "user_entities_description_urls']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['protected']"
+								},
+								"sink": {
+									"name": "user_protected"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['followers_count']"
+								},
+								"sink": {
+									"name": "user_followers_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['friends_count']"
+								},
+								"sink": {
+									"name": "user_friends_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['listed_count']"
+								},
+								"sink": {
+									"name": "user_listed_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['created_at']"
+								},
+								"sink": {
+									"name": "user_created_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['favourites_count']"
+								},
+								"sink": {
+									"name": "user_favourites_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['utc_offset']"
+								},
+								"sink": {
+									"name": "user_utc_offset"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['time_zone']"
+								},
+								"sink": {
+									"name": "user_time_zone"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['geo_enabled']"
+								},
+								"sink": {
+									"name": "user_geo_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['verified']"
+								},
+								"sink": {
+									"name": "user_verified"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['statuses_count']"
+								},
+								"sink": {
+									"name": "user_statuses_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['lang']"
+								},
+								"sink": {
+									"name": "user_lang"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['contributors_enabled']"
+								},
+								"sink": {
+									"name": "user_contributors_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['is_translator']"
+								},
+								"sink": {
+									"name": "user_is_translator"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['is_translation_enabled']"
+								},
+								"sink": {
+									"name": "user_is_translation_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_background_color']"
+								},
+								"sink": {
+									"name": "user_profile_background_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_background_image_url']"
+								},
+								"sink": {
+									"name": "user_profile_background_image_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_background_image_url_https']"
+								},
+								"sink": {
+									"name": "user_profile_background_image_url_https"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_background_tile']"
+								},
+								"sink": {
+									"name": "user_profile_background_tile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_image_url']"
+								},
+								"sink": {
+									"name": "user_profile_image_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_image_url_https']"
+								},
+								"sink": {
+									"name": "user_profile_image_url_https"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_banner_url']"
+								},
+								"sink": {
+									"name": "user_profile_banner_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_link_color']"
+								},
+								"sink": {
+									"name": "user_profile_link_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_sidebar_border_color']"
+								},
+								"sink": {
+									"name": "user_profile_sidebar_border_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_sidebar_fill_color']"
+								},
+								"sink": {
+									"name": "user_profile_sidebar_fill_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_text_color']"
+								},
+								"sink": {
+									"name": "user_profile_text_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['profile_use_background_image']"
+								},
+								"sink": {
+									"name": "user_profile_use_background_image"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['has_extended_profile']"
+								},
+								"sink": {
+									"name": "user_has_extended_profile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['default_profile']"
+								},
+								"sink": {
+									"name": "user_default_profile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['default_profile_image']"
+								},
+								"sink": {
+									"name": "user_default_profile_image"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['following']"
+								},
+								"sink": {
+									"name": "user_following"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['follow_request_sent']"
+								},
+								"sink": {
+									"name": "user_follow_request_sent"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['notifications']"
+								},
+								"sink": {
+									"name": "user_notifications"
+								}
+							},
+							{
+								"source": {
+									"path": "$['user']['translator_type']"
+								},
+								"sink": {
+									"name": "user_translator_type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['geo']"
+								},
+								"sink": {
+									"name": "geo"
+								}
+							},
+							{
+								"source": {
+									"path": "$['coordinates']"
+								},
+								"sink": {
+									"name": "coordinates"
+								}
+							},
+							{
+								"source": {
+									"path": "$['place']"
+								},
+								"sink": {
+									"name": "place"
+								}
+							},
+							{
+								"source": {
+									"path": "$['contributors']"
+								},
+								"sink": {
+									"name": "contributors"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['created_at']"
+								},
+								"sink": {
+									"name": "retweeted_status_created_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['id']"
+								},
+								"sink": {
+									"name": "retweeted_status_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['id_str']"
+								},
+								"sink": {
+									"name": "retweeted_status_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['text']"
+								},
+								"sink": {
+									"name": "retweeted_status_text"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['truncated']"
+								},
+								"sink": {
+									"name": "retweeted_status_truncated"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['hashtags'][0]['text']"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_hashtags'][0]['text"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['hashtags'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_hashtags'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['symbols'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_symbols']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['user_mentions'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_user_mentions']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['urls'][0]['url']"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_urls'][0]['url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['urls'][0]['expanded_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_urls'][0]['expanded_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['urls'][0]['display_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_urls'][0]['display_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['entities']['urls'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_entities_urls'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['metadata']['iso_language_code']"
+								},
+								"sink": {
+									"name": "retweeted_status_metadata_iso_language_code"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['metadata']['result_type']"
+								},
+								"sink": {
+									"name": "retweeted_status_metadata_result_type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['source']"
+								},
+								"sink": {
+									"name": "retweeted_status_source"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['in_reply_to_status_id']"
+								},
+								"sink": {
+									"name": "retweeted_status_in_reply_to_status_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['in_reply_to_status_id_str']"
+								},
+								"sink": {
+									"name": "retweeted_status_in_reply_to_status_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['in_reply_to_user_id']"
+								},
+								"sink": {
+									"name": "retweeted_status_in_reply_to_user_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['in_reply_to_user_id_str']"
+								},
+								"sink": {
+									"name": "retweeted_status_in_reply_to_user_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['in_reply_to_screen_name']"
+								},
+								"sink": {
+									"name": "retweeted_status_in_reply_to_screen_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['id']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['id_str']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_id_str"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['name']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['screen_name']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_screen_name"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['location']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_location"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['description']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_description"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['entities']['url']['urls'][0]['url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_entities_url_urls'][0]['url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['entities']['url']['urls'][0]['expanded_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_entities_url_urls'][0]['expanded_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['entities']['url']['urls'][0]['display_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_entities_url_urls'][0]['display_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['entities']['url']['urls'][0]['indices'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_user_entities_url_urls'][0]['indices']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['entities']['description']['urls'][0]"
+								},
+								"sink": {
+									"name": "retweeted_status_user_entities_description_urls']["
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['protected']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_protected"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['followers_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_followers_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['friends_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_friends_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['listed_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_listed_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['created_at']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_created_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['favourites_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_favourites_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['utc_offset']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_utc_offset"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['time_zone']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_time_zone"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['geo_enabled']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_geo_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['verified']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_verified"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['statuses_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_statuses_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['lang']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_lang"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['contributors_enabled']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_contributors_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['is_translator']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_is_translator"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['is_translation_enabled']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_is_translation_enabled"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_background_color']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_background_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_background_image_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_background_image_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_background_image_url_https']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_background_image_url_https"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_background_tile']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_background_tile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_image_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_image_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_image_url_https']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_image_url_https"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_banner_url']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_banner_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_link_color']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_link_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_sidebar_border_color']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_sidebar_border_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_sidebar_fill_color']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_sidebar_fill_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_text_color']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_text_color"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['profile_use_background_image']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_profile_use_background_image"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['has_extended_profile']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_has_extended_profile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['default_profile']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_default_profile"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['default_profile_image']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_default_profile_image"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['following']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_following"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['follow_request_sent']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_follow_request_sent"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['notifications']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_notifications"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['user']['translator_type']"
+								},
+								"sink": {
+									"name": "retweeted_status_user_translator_type"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['geo']"
+								},
+								"sink": {
+									"name": "retweeted_status_geo"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['coordinates']"
+								},
+								"sink": {
+									"name": "retweeted_status_coordinates"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['place']"
+								},
+								"sink": {
+									"name": "retweeted_status_place"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['contributors']"
+								},
+								"sink": {
+									"name": "retweeted_status_contributors"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['is_quote_status']"
+								},
+								"sink": {
+									"name": "retweeted_status_is_quote_status"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['retweet_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_retweet_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['favorite_count']"
+								},
+								"sink": {
+									"name": "retweeted_status_favorite_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['favorited']"
+								},
+								"sink": {
+									"name": "retweeted_status_favorited"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['retweeted']"
+								},
+								"sink": {
+									"name": "retweeted_status_retweeted"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['possibly_sensitive']"
+								},
+								"sink": {
+									"name": "retweeted_status_possibly_sensitive"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted_status']['lang']"
+								},
+								"sink": {
+									"name": "retweeted_status_lang"
+								}
+							},
+							{
+								"source": {
+									"path": "$['is_quote_status']"
+								},
+								"sink": {
+									"name": "is_quote_status"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweet_count']"
+								},
+								"sink": {
+									"name": "retweet_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['favorite_count']"
+								},
+								"sink": {
+									"name": "favorite_count"
+								}
+							},
+							{
+								"source": {
+									"path": "$['favorited']"
+								},
+								"sink": {
+									"name": "favorited"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retweeted']"
+								},
+								"sink": {
+									"name": "retweeted"
+								}
+							},
+							{
+								"source": {
+									"path": "$['lang']"
+								},
+								"sink": {
+									"name": "lang"
+								}
+							},
+							{
+								"source": {
+									"path": "$['possibly_sensitive']"
+								},
+								"sink": {
+									"name": "possibly_sensitive"
+								}
+							},
+							{
+								"source": {
+									"path": "$['possibly_sensitive_appealable']"
+								},
+								"sink": {
+									"name": "possibly_sensitive_appealable"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "json",
+							"folder_path": " ",
+							"file_name": "nested.json"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_PARQUET",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "sales",
+							"folder_path": "flatten_json",
+							"file_name": "flatten_json.parquet"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
