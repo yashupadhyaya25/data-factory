@@ -171,10 +171,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container_name": "incremental",
-										"folder_path": {
-											"value": "@item().name",
-											"type": "Expression"
-										},
+										"folder_path": "new_files",
 										"file_name": " "
 									}
 								}
