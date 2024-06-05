@@ -42,54 +42,70 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['batters']['batter'][0]['id']"
+									"path": "$['returnReference']"
 								},
 								"sink": {
-									"name": "batters_batter'][0]['id"
+									"name": "returnReference"
 								}
 							},
 							{
 								"source": {
-									"path": "$['batters']['batter'][0]['type']"
+									"path": "$['orderReference']"
 								},
 								"sink": {
-									"name": "batters_batter'][0]['type"
+									"name": "orderReference"
 								}
 							},
 							{
 								"source": {
-									"path": "$['id']"
+									"path": "$['customerId']"
 								},
 								"sink": {
-									"name": "id"
+									"name": "customerId"
 								}
 							},
 							{
 								"source": {
-									"path": "$['type']"
+									"path": "$['items'][0]['variantId']"
 								},
 								"sink": {
-									"name": "type"
+									"name": "variantId"
 								}
 							},
 							{
 								"source": {
-									"path": "$['name']"
+									"path": "$['items'][0]['quantity']"
 								},
 								"sink": {
-									"name": "name"
+									"name": "quantity"
 								}
 							},
 							{
 								"source": {
-									"path": "$['ppu']"
+									"path": "$['items'][0]['returnReason']['code']"
 								},
 								"sink": {
-									"name": "ppu"
+									"name": "code"
+								}
+							},
+							{
+								"source": {
+									"path": "$['items'][0]['returnReason']['notes']"
+								},
+								"sink": {
+									"name": "notes"
+								}
+							},
+							{
+								"source": {
+									"path": "$['timestamp']"
+								},
+								"sink": {
+									"name": "timestamp"
 								}
 							}
 						],
-						"collectionReference": "",
+						"collectionReference": "$['items']",
 						"mapComplexValuesToString": false
 					}
 				},
