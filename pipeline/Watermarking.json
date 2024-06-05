@@ -197,7 +197,7 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "Query",
+							"type": "NonQuery",
 							"text": {
 								"value": "@concat(\n    'CALL DATACART.PUBLIC.UPDATE_WATERMARK(',\n    decodeUriComponent('%27'),'ORDERS',decodeUriComponent('%27'),',',\n    decodeUriComponent('%27'),activity('Get Latest watermark value').output.firstRow.WATERMARK,decodeUriComponent('%27'),\n    ');'\n)",
 								"type": "Expression"
