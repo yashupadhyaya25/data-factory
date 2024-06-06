@@ -2,7 +2,7 @@
 	"name": "BLOB_CSV",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Storage_ADLS",
+			"referenceName": "Retail_Sync_Hub",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
