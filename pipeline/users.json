@@ -66,6 +66,84 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Json To CSV - Bronze",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "API To BLOB - RAW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.raw_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@pipeline().parameters.folder_path",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.json')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
 			}
 		],
 		"parameters": {
@@ -73,6 +151,9 @@
 				"type": "string"
 			},
 			"folder_path": {
+				"type": "string"
+			},
+			"bronze_container_name": {
 				"type": "string"
 			}
 		},
