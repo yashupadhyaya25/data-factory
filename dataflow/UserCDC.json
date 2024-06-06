@@ -47,11 +47,11 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
-				"          ID = id,",
-				"          EMAIL_ID = email,",
-				"          USER_NAME = username,",
-				"          PASSWORD = password,",
-				"          PHONE = phone",
+				"          id,",
+				"          email,",
+				"          username,",
+				"          password,",
+				"          phone",
 				"     )) ~> GoldLayer"
 			]
 		}
