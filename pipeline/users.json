@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "API To BLOB",
+				"name": "API To BLOB - RAW",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -52,7 +52,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": {
-								"value": "@pipeline().parameters.container_name",
+								"value": "@pipeline().parameters.raw_container_name",
 								"type": "Expression"
 							},
 							"folder_path": {
@@ -60,7 +60,7 @@
 								"type": "Expression"
 							},
 							"file_name": {
-								"value": "@concat('user_data_',utcnow(),'.json')",
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.json')",
 								"type": "Expression"
 							}
 						}
@@ -69,7 +69,7 @@
 			}
 		],
 		"parameters": {
-			"container_name": {
+			"raw_container_name": {
 				"type": "string"
 			},
 			"folder_path": {
