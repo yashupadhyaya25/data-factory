@@ -1,5 +1,5 @@
 {
-	"name": "User CDC",
+	"name": "UserCDC",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -12,17 +12,47 @@
 					"name": "SilverLayer"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BLOB_PARQUET",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "PIIimplementation"
+				}
+			],
 			"scriptLines": [
-				"parameters{",
-				"     source_container as string,",
-				"     destination_container as string,",
-				"     folder_path as string",
-				"}",
-				"source(allowSchemaDrift: false,",
+				"source(output(",
+				"          id as short,",
+				"          email as string,",
+				"          username as string,",
+				"          password as string,",
+				"          phone as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> SilverLayer"
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> SilverLayer",
+				"SilverLayer derive(password = sha2(256, password)) ~> PIIimplementation",
+				"PIIimplementation sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          ID = id,",
+				"          EMAIL_ID = email,",
+				"          USER_NAME = username,",
+				"          PASSWORD = password,",
+				"          PHONE = phone",
+				"     )) ~> sink1"
 			]
 		}
 	}
