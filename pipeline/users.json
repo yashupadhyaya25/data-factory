@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "User",
+				"name": "API To BLOB",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -26,6 +26,15 @@
 							"type": "JsonReadSettings"
 						}
 					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
@@ -36,9 +45,40 @@
 							"endpoint": "users"
 						}
 					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@pipeline().parameters.folder_path",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.file_name",
+								"type": "Expression"
+							}
+						}
+					}
 				]
 			}
 		],
+		"parameters": {
+			"container_name": {
+				"type": "string"
+			},
+			"folder_path": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Users"
 		},
