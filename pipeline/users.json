@@ -137,6 +137,14 @@
 						"referenceName": "BLOB_CSV",
 						"type": "DatasetReference",
 						"parameters": {
+							"container_name": {
+								"value": "@pipeline().parameters.bronze_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@pipeline().parameters.folder_path",
+								"type": "Expression"
+							},
 							"file_name": {
 								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
 								"type": "Expression"
