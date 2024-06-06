@@ -37,6 +37,7 @@
 				"     allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
+				"     wildcardPaths:['*.csv'],",
 				"     mode: 'read') ~> SilverLayer",
 				"SilverLayer derive(password = sha2(256, password)) ~> PIIimplementation",
 				"PIIimplementation sink(allowSchemaDrift: true,",
