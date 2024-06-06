@@ -1,0 +1,29 @@
+{
+	"name": "User CDC",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "BLOB_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "SilverLayer"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"parameters{",
+				"     source_container as string,",
+				"     destination_container as string,",
+				"     folder_path as string",
+				"}",
+				"source(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SilverLayer"
+			]
+		}
+	}
+}
