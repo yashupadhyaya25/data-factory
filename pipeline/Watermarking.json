@@ -238,6 +238,9 @@
 				"defaultValue": "orders"
 			}
 		},
+		"folder": {
+			"name": "Learning"
+		},
 		"annotations": []
 	}
 }
