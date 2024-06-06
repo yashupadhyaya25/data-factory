@@ -31,7 +31,10 @@
 				"inputs": [
 					{
 						"referenceName": "STORE_API",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"endpoint": "users"
+						}
 					}
 				]
 			}
