@@ -307,6 +307,70 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "UserCDC",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Remove Unwanted Columns - Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "UserCDC",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SilverLayer": {
+								"container_name": {
+									"value": "@pipeline().parameters.silver_container_name",
+									"type": "Expression"
+								},
+								"folder_path": {
+									"value": "@pipeline().parameters.folder_path",
+									"type": "Expression"
+								},
+								"file_name": {
+									"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+									"type": "Expression"
+								}
+							},
+							"GoldLayer": {
+								"container": {
+									"value": "@pipeline().parameters.gold_container_name",
+									"type": "Expression"
+								},
+								"folder_path": {
+									"value": "@pipeline().parameters.folder_path",
+									"type": "Expression"
+								},
+								"file_name": {
+									"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.parquet')",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine",
+					"continuationSettings": {
+						"customizedCheckpointKey": "6d6f760b-2c96-49ff-97d1-b2d63eae21ec"
+					}
+				}
 			}
 		],
 		"parameters": {
