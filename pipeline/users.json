@@ -449,6 +449,53 @@
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
+			},
+			{
+				"name": "Load Cur User",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Load Hist User",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_USER();",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"parameters": {
