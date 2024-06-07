@@ -450,7 +450,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL GET_USER();')",
+								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_USER();",
 								"type": "Expression"
 							}
 						}
