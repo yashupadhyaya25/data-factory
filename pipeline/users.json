@@ -426,7 +426,15 @@
 					"referenceName": "dev_snowflake",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"database": "DISC_DEV"
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
 					}
 				},
 				"typeProperties": {
