@@ -371,6 +371,37 @@
 						"customizedCheckpointKey": "6d6f760b-2c96-49ff-97d1-b2d63eae21ec"
 					}
 				}
+			},
+			{
+				"name": "Notify Team",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "API To BLOB - RAW",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-77.eastus.logic.azure.com:443/workflows/3b83ac757c5d4048af675ea1be1d4db0/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=_5Sup7FqX-1TkqaXd7fwTLJtvaH_xK3SAAeuVH5Gvu0",
+					"body": {
+						"value": "@json(\n    concat(\n        '{ \"Subject\" : \"USER FAIL\",\n        \"Message\" : \"RAW LAYER FAIL\",\n        \"StatusCode\" : \"400\",',\n        '\"PipelineName\" : \"',pipeline().Pipeline,'\",',\n        '\"PipelineRunId\" : \"',pipeline().RunId ,'\"}'\n\n    )\n)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
