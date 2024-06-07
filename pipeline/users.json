@@ -414,6 +414,8 @@
 			{
 				"name": "Load Hist User",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "UserCDC",
@@ -450,7 +452,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_USER();",
+								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_HIST_USER();",
 								"type": "Expression"
 							}
 						}
