@@ -406,19 +406,32 @@
 		],
 		"parameters": {
 			"raw_container_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "raw"
 			},
 			"folder_path": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "user"
 			},
 			"bronze_container_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "bronze"
 			},
 			"silver_container_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "silver"
 			},
 			"gold_container_name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "gold"
+			},
+			"sf_warehouse": {
+				"type": "string",
+				"defaultValue": "COMPUTE_WH"
+			},
+			"sf_role": {
+				"type": "string",
+				"defaultValue": "ACCOUNTADMIN"
 			}
 		},
 		"folder": {
