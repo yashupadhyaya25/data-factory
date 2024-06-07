@@ -5,6 +5,8 @@
 			{
 				"name": "API To BLOB - RAW",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -70,6 +72,8 @@
 			{
 				"name": "Json To CSV - Bronze",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "API To BLOB - RAW",
@@ -156,6 +160,8 @@
 			{
 				"name": "Remove Unwanted Columns - Silver",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Json To CSV - Bronze",
@@ -311,6 +317,8 @@
 			{
 				"name": "UserCDC",
 				"type": "ExecuteDataFlow",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Remove Unwanted Columns - Silver",
@@ -401,6 +409,42 @@
 						"value": "@json(\n    concat(\n        '{ \"Subject\" : \"USER FAIL\",\n        \"Message\" : \"RAW LAYER FAIL\",\n        \"StatusCode\" : \"400\",',\n        '\"PipelineName\" : \"',pipeline().Pipeline,'\",',\n        '\"PipelineRunId\" : \"',pipeline().RunId ,'\"}'\n\n    )\n)",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "Load Hist User",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "UserCDC",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV"
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "CALL GET_USER();"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
 				}
 			}
 		],
