@@ -5,6 +5,8 @@
 			{
 				"name": "API To BLOB - RAW",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -70,6 +72,8 @@
 			{
 				"name": "Json To CSV - Bronze",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "API To BLOB - RAW",
@@ -156,6 +160,8 @@
 			{
 				"name": "Remove Unwanted Columns - Silver",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Json To CSV - Bronze",
@@ -442,7 +448,7 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "Query",
+							"type": "NonQuery",
 							"text": "CALL GET_USER();"
 						}
 					],
