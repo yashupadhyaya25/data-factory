@@ -42,7 +42,7 @@
 				"     skipInitialLoad: false,",
 				"     wildcardPaths:['*']) ~> SilverLayer",
 				"SilverLayer derive(password = sha2(256, password),",
-				"          load_date = currentDate()) ~> PIIimplementation",
+				"          etl_load_date = currentDate()) ~> PIIimplementation",
 				"PIIimplementation sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
