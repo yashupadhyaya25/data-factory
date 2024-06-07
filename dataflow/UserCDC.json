@@ -47,15 +47,7 @@
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          id,",
-				"          email,",
-				"          username,",
-				"          password,",
-				"          phone,",
-				"          etl_load_date",
-				"     )) ~> GoldLayer"
+				"     skipDuplicateMapOutputs: true) ~> GoldLayer"
 			]
 		}
 	}
