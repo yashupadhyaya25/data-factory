@@ -433,7 +433,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "CALL GET_USER();"
+							"text": "CALL GET_USER()"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
