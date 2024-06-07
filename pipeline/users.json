@@ -311,8 +311,6 @@
 			{
 				"name": "UserCDC",
 				"type": "ExecuteDataFlow",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Remove Unwanted Columns - Silver",
