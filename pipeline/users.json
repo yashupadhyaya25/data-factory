@@ -448,8 +448,11 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "NonQuery",
-							"text": "CALL GET_USER();"
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL GET_USER();')",
+								"type": "Expression"
+							}
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
