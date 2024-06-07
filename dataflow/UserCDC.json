@@ -53,7 +53,8 @@
 				"          email,",
 				"          username,",
 				"          password,",
-				"          phone",
+				"          phone,",
+				"          etl_load_date",
 				"     )) ~> GoldLayer"
 			]
 		}
