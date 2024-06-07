@@ -448,7 +448,7 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "NonQuery",
+							"type": "Query",
 							"text": {
 								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_USER();",
 								"type": "Expression"
