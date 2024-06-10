@@ -312,70 +312,6 @@
 				]
 			},
 			{
-				"name": "UserCDC",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Remove Unwanted Columns - Silver",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "UserCDC",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SilverLayer": {
-								"container_name": {
-									"value": "@pipeline().parameters.silver_container_name",
-									"type": "Expression"
-								},
-								"folder_path": {
-									"value": "@pipeline().parameters.folder_path",
-									"type": "Expression"
-								},
-								"file_name": {
-									"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
-									"type": "Expression"
-								}
-							},
-							"GoldLayer": {
-								"container": {
-									"value": "@pipeline().parameters.gold_container_name",
-									"type": "Expression"
-								},
-								"folder_path": {
-									"value": "@pipeline().parameters.folder_path",
-									"type": "Expression"
-								},
-								"file_name": {
-									"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.parquet')",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine",
-					"continuationSettings": {
-						"customizedCheckpointKey": "188ae1ce-69f6-49ab-95a0-3440a6415e3b"
-					}
-				}
-			},
-			{
 				"name": "Notify Team",
 				"type": "WebActivity",
 				"dependsOn": [
@@ -409,14 +345,9 @@
 			{
 				"name": "Load Hist User",
 				"type": "Script",
-				"dependsOn": [
-					{
-						"activity": "UserCDC",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -456,6 +387,8 @@
 			{
 				"name": "Load Cur User",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Load Hist User",
@@ -503,6 +436,8 @@
 			{
 				"name": "Load Stage",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Load Cur User",
@@ -542,6 +477,89 @@
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Switch1",
+				"type": "Switch",
+				"dependsOn": [
+					{
+						"activity": "Remove Unwanted Columns - Silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@equals(toUpper(pipeline().parameters.source_system),'FAKESTORE')",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "FakeStore",
+							"activities": [
+								{
+									"name": "UserCDC",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "UserCDC",
+											"type": "DataFlowReference",
+											"datasetParameters": {
+												"SilverLayer": {
+													"container_name": {
+														"value": "@pipeline().parameters.silver_container_name",
+														"type": "Expression"
+													},
+													"folder_path": {
+														"value": "@pipeline().parameters.folder_path",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+														"type": "Expression"
+													}
+												},
+												"GoldLayer": {
+													"container": {
+														"value": "@pipeline().parameters.gold_container_name",
+														"type": "Expression"
+													},
+													"folder_path": {
+														"value": "@pipeline().parameters.folder_path",
+														"type": "Expression"
+													},
+													"file_name": {
+														"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.parquet')",
+														"type": "Expression"
+													}
+												}
+											}
+										},
+										"compute": {
+											"coreCount": 8,
+											"computeType": "General"
+										},
+										"traceLevel": "Fine",
+										"continuationSettings": {
+											"customizedCheckpointKey": "188ae1ce-69f6-49ab-95a0-3440a6415e3b"
+										}
+									}
+								}
+							]
+						}
+					]
 				}
 			}
 		],
