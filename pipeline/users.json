@@ -442,7 +442,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_HIST_USER();",
+								"value": "CALL DISC_DEV.FAKESTORE.GET_HIST_USER();",
 								"type": "Expression"
 							}
 						}
@@ -489,7 +489,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "CALL DISC_DEV.FAKESTORE_USER.GET_USER();",
+								"value": "CALL DISC_DEV.FAKESTORE.GET_USER();",
 								"type": "Expression"
 							}
 						}
