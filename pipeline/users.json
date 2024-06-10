@@ -577,6 +577,10 @@
 			"endpoint_url": {
 				"type": "string",
 				"defaultValue": "https://fakestoreapi.com/"
+			},
+			"source_system": {
+				"type": "string",
+				"defaultValue": "fakestore"
 			}
 		},
 		"folder": {
