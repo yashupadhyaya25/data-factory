@@ -9,7 +9,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "@{concat('https://fakestoreapi.com/',linkedService().endpoint)}",
+			"url": "@{linkedService().endpoint}",
 			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		}
