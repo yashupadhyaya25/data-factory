@@ -42,7 +42,10 @@
 						"referenceName": "STORE_API",
 						"type": "DatasetReference",
 						"parameters": {
-							"endpoint": "users"
+							"endpoint": {
+								"value": "@pipeline().parameters.endpoint_url",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -496,6 +499,50 @@
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
+			},
+			{
+				"name": "Load Stage",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Load Cur User",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "call GET_FAKE_STORE_DIM_USER();"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
 			}
 		],
 		"parameters": {
@@ -526,6 +573,10 @@
 			"sf_role": {
 				"type": "string",
 				"defaultValue": "ACCOUNTADMIN"
+			},
+			"endpoint_url": {
+				"type": "string",
+				"defaultValue": "https://fakestoreapi.com/"
 			}
 		},
 		"folder": {
