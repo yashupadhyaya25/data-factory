@@ -428,7 +428,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_USER(',pipeline().parameters.source_system,''');')",
+								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_USER(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
 							}
 						}
