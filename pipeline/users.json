@@ -157,7 +157,7 @@
 				]
 			},
 			{
-				"name": "Remove Unwanted Columns - Silver",
+				"name": "Silver Layer",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -201,68 +201,6 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "id",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "id",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "email",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "username",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "username",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "password",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "password",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "phone",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "phone",
-									"type": "String",
-									"physicalType": "String"
-								}
-							}
-						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -488,7 +426,7 @@
 				"type": "Switch",
 				"dependsOn": [
 					{
-						"activity": "Remove Unwanted Columns - Silver",
+						"activity": "Silver Layer",
 						"dependencyConditions": [
 							"Succeeded"
 						]
