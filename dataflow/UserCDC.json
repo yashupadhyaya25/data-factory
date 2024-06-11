@@ -27,14 +27,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          id as short,",
-				"          email as string,",
-				"          username as string,",
-				"          password as string,",
-				"          phone as string",
-				"     ),",
-				"     allowSchemaDrift: false,",
+				"source(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
