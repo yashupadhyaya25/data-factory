@@ -505,7 +505,7 @@
 							"value": "ESCUELAJS",
 							"activities": [
 								{
-									"name": "Copy data1",
+									"name": "Gold Layer",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -519,6 +519,22 @@
 									"typeProperties": {
 										"source": {
 											"type": "DelimitedTextSource",
+											"additionalColumns": [
+												{
+													"name": "etl_load_date",
+													"value": {
+														"value": "@utcnow()",
+														"type": "Expression"
+													}
+												},
+												{
+													"name": "source",
+													"value": {
+														"value": "@pipeline().parameters.source_system",
+														"type": "Expression"
+													}
+												}
+											],
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
