@@ -1,5 +1,5 @@
 {
-	"name": "FakeStore - User CDC",
+	"name": "FakeStoreUserCDC",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

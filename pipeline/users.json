@@ -456,7 +456,7 @@
 									"userProperties": [],
 									"typeProperties": {
 										"dataflow": {
-											"referenceName": "FakeStore - User CDC",
+											"referenceName": "FakeStoreUserCDC",
 											"type": "DataFlowReference",
 											"datasetParameters": {
 												"SilverLayer": {
