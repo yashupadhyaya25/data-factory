@@ -485,7 +485,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',toUpper(pipeline().parameters.source_system),'_DIM_USER','.GET_USER(''',toUpper(pipeline().parameters.source_system),''');')",
+								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',toUpper(pipeline().parameters.source_system),'_DIM_USER','(''',toUpper(pipeline().parameters.source_system),''');')",
 								"type": "Expression"
 							}
 						}
