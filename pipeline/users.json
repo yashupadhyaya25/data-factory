@@ -351,6 +351,8 @@
 			{
 				"name": "Load Hist User",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Switch1",
@@ -398,6 +400,8 @@
 			{
 				"name": "Load Cur User",
 				"type": "Script",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Load Hist User",
@@ -481,7 +485,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',pipeline().parameters.source_system,'_DIM_USER_',pipeline().parameters.source_system,'.GET_USER(''',pipeline().parameters.source_system,''');')",
+								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',pipeline().parameters.source_system,'_DIM_USER','.GET_USER(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
 							}
 						}
