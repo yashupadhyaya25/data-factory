@@ -385,7 +385,7 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "NonQuery",
+							"type": "Query",
 							"text": {
 								"value": "@concat('CALL DISC_DEV.FAKESTORE.GET_HIST_USER(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
