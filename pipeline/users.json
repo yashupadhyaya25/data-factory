@@ -598,7 +598,7 @@
 			},
 			"endpoint_url": {
 				"type": "string",
-				"defaultValue": "https://fakestoreapi.com/"
+				"defaultValue": "https://fakestoreapi.com/users"
 			},
 			"source_system": {
 				"type": "string",
