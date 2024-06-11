@@ -387,7 +387,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL DISC_DEV.FAKESTORE.GET_HIST_USER(''',pipeline().parameters.source_system,''');')",
+								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_HIST_USER(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
 							}
 						}
@@ -398,8 +398,6 @@
 			{
 				"name": "Load Cur User",
 				"type": "Script",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Load Hist User",
@@ -434,9 +432,9 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "NonQuery",
+							"type": "Query",
 							"text": {
-								"value": "CALL DISC_DEV.FAKESTORE.GET_USER();",
+								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_USER(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
 							}
 						}
@@ -447,8 +445,6 @@
 			{
 				"name": "Load Stage",
 				"type": "Script",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Load Cur User",
@@ -483,8 +479,11 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "NonQuery",
-							"text": "call GET_FAKE_STORE_DIM_USER();"
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',pipeline().parameters.source_system,'_DIM_USER',pipeline().parameters.source_system,'.GET_USER(''',pipeline().parameters.source_system,''');')",
+								"type": "Expression"
+							}
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
