@@ -1,0 +1,17 @@
+{
+	"name": "Fake_Store",
+	"properties": {
+		"parameters": {
+			"endpoint": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "@{linkedService().endpoint}",
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Anonymous"
+		}
+	}
+}

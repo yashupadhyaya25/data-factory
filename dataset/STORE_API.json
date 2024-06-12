@@ -1,0 +1,28 @@
+{
+	"name": "STORE_API",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Fake_Store",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"endpoint": {
+					"value": "@dataset().endpoint",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"endpoint": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		},
+		"schema": {}
+	}
+}

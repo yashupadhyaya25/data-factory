@@ -1,5 +1,5 @@
 {
-	"name": "BLOB_CSV",
+	"name": "BLOB_CSV_FILE_FOLDER",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Retail_Sync_Hub",
@@ -11,9 +11,6 @@
 			},
 			"folder_path": {
 				"type": "string"
-			},
-			"file_name": {
-				"type": "string"
 			}
 		},
 		"folder": {
@@ -24,10 +21,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().file_name",
-					"type": "Expression"
-				},
 				"folderPath": {
 					"value": "@dataset().folder_path",
 					"type": "Expression"

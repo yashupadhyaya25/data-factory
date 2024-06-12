@@ -2,7 +2,7 @@
 	"name": "BLOB_PARQUET",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Storage_ADLS",
+			"referenceName": "Retail_Sync_Hub",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -15,6 +15,9 @@
 			"file_name": {
 				"type": "string"
 			}
+		},
+		"folder": {
+			"name": "Learning"
 		},
 		"annotations": [],
 		"type": "Parquet",

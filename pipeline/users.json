@@ -1,0 +1,687 @@
+{
+	"name": "users",
+	"properties": {
+		"activities": [
+			{
+				"name": "API To BLOB - RAW",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET",
+							"requestTimeout": ""
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "STORE_API",
+						"type": "DatasetReference",
+						"parameters": {
+							"endpoint": {
+								"value": "@pipeline().parameters.endpoint_url",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.raw_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.json')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Json To CSV - Bronze",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "API To BLOB - RAW",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "BLOB_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": {
+								"value": "@pipeline().parameters.raw_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.json')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": {
+								"value": "@pipeline().parameters.bronze_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Silver Layer",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Json To CSV - Bronze",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BLOB_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": {
+								"value": "@pipeline().parameters.bronze_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "BLOB_CSV",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": {
+								"value": "@pipeline().parameters.silver_container_name",
+								"type": "Expression"
+							},
+							"folder_path": {
+								"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Notify Team",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "API To BLOB - RAW",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"url": "https://prod-77.eastus.logic.azure.com:443/workflows/3b83ac757c5d4048af675ea1be1d4db0/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=_5Sup7FqX-1TkqaXd7fwTLJtvaH_xK3SAAeuVH5Gvu0",
+					"body": {
+						"value": "@json(\n    concat(\n        '{ \"Subject\" : \"USER FAIL\",\n        \"Message\" : \"RAW LAYER FAIL\",\n        \"StatusCode\" : \"400\",',\n        '\"PipelineName\" : \"',pipeline().Pipeline,'\",',\n        '\"PipelineRunId\" : \"',pipeline().RunId ,'\"}'\n\n    )\n)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Load Hist User",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Switch1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_HIST_USER(''',pipeline().parameters.source_system,''');')",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Load Cur User",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Load Hist User",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL DISC_DEV.',pipeline().parameters.source_system,'.GET_USER(''',pipeline().parameters.source_system,''');')",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Load Stage",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Load Cur User",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL RETAIL_STAGE.PUBLIC.GET_',pipeline().parameters.source_system,'_DIM_USER','(''',pipeline().parameters.source_system,''');')",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			},
+			{
+				"name": "Switch1",
+				"type": "Switch",
+				"dependsOn": [
+					{
+						"activity": "Silver Layer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@toUpper(pipeline().parameters.source_system)",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "FAKESTORE",
+							"activities": [
+								{
+									"name": "FakeStore Gold Layer",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "FakeStoreUserCDC",
+											"type": "DataFlowReference",
+											"datasetParameters": {
+												"SilverLayer": {
+													"container_name": {
+														"value": "@pipeline().parameters.silver_container_name",
+														"type": "Expression"
+													},
+													"folder_path": {
+														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+														"type": "Expression"
+													}
+												},
+												"GoldLayer": {
+													"container": {
+														"value": "@pipeline().parameters.gold_container_name",
+														"type": "Expression"
+													},
+													"folder_path": {
+														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+														"type": "Expression"
+													},
+													"file_name": " "
+												}
+											}
+										},
+										"compute": {
+											"coreCount": 8,
+											"computeType": "General"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					],
+					"defaultActivities": [
+						{
+							"name": "Default Gold Layer",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"additionalColumns": [
+										{
+											"name": "etl_load_date",
+											"value": {
+												"value": "@utcnow()",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "source",
+											"value": {
+												"value": "@pipeline().parameters.source_system",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "BLOB_CSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"container_name": {
+											"value": "@pipeline().parameters.silver_container_name",
+											"type": "Expression"
+										},
+										"folder_path": {
+											"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "BLOB_PARQUET",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": {
+											"value": "@pipeline().parameters.gold_container_name",
+											"type": "Expression"
+										},
+										"folder_path": {
+											"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+											"type": "Expression"
+										},
+										"file_name": "user_data.parquet"
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Load Integration",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Load Stage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "dev_snowflake",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": "DISC_DEV",
+						"warehouse": {
+							"value": "@pipeline().parameters.sf_warehouse",
+							"type": "Expression"
+						},
+						"role": {
+							"value": "@pipeline().parameters.sf_role",
+							"type": "Expression"
+						}
+					}
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": {
+								"value": "@concat('CALL RETAIL.PUBLIC.merge_user','(''',pipeline().parameters.source_system,''');')",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"parameters": {
+			"raw_container_name": {
+				"type": "string",
+				"defaultValue": "raw"
+			},
+			"folder_path": {
+				"type": "string",
+				"defaultValue": "user"
+			},
+			"bronze_container_name": {
+				"type": "string",
+				"defaultValue": "bronze"
+			},
+			"silver_container_name": {
+				"type": "string",
+				"defaultValue": "silver"
+			},
+			"gold_container_name": {
+				"type": "string",
+				"defaultValue": "gold"
+			},
+			"sf_warehouse": {
+				"type": "string",
+				"defaultValue": "COMPUTE_WH"
+			},
+			"sf_role": {
+				"type": "string",
+				"defaultValue": "ACCOUNTADMIN"
+			},
+			"endpoint_url": {
+				"type": "string",
+				"defaultValue": "https://fakestoreapi.com/users"
+			},
+			"source_system": {
+				"type": "string",
+				"defaultValue": "fakestore"
+			}
+		},
+		"folder": {
+			"name": "Users"
+		},
+		"annotations": []
+	}
+}

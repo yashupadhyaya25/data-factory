@@ -1,0 +1,67 @@
+{
+	"name": "FakeStoreUserCDC",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "BLOB_CSV_FILE_FOLDER",
+						"type": "DatasetReference"
+					},
+					"name": "SilverLayer"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BLOB_PARQUET",
+						"type": "DatasetReference"
+					},
+					"name": "GoldLayer"
+				}
+			],
+			"transformations": [
+				{
+					"name": "PIIimplementation"
+				},
+				{
+					"name": "RemoveUnwantedColumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as short,",
+				"          email as string,",
+				"          username as string,",
+				"          password as string,",
+				"          phone as string,",
+				"          {__v} as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     enableCdc: true,",
+				"     mode: 'read',",
+				"     skipInitialLoad: false) ~> SilverLayer",
+				"RemoveUnwantedColumns derive(password = sha2(256, password),",
+				"          etl_load_date = currentUTC(),",
+				"          source = 'FAKESTORE') ~> PIIimplementation",
+				"SilverLayer select(mapColumn(",
+				"          id,",
+				"          email,",
+				"          username,",
+				"          password,",
+				"          phone",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RemoveUnwantedColumns",
+				"PIIimplementation sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> GoldLayer"
+			]
+		}
+	}
+}

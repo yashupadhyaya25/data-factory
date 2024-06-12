@@ -36,6 +36,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "Learning"
+		},
 		"annotations": [],
 		"type": "SnowflakeV2Table",
 		"schema": [],
