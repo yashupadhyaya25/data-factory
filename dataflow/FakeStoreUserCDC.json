@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "BLOB_CSV",
+						"referenceName": "BLOB_CSV_FILE_FOLDER",
 						"type": "DatasetReference"
 					},
 					"name": "SilverLayer"
@@ -30,15 +30,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          id as short,",
-				"          email as string,",
-				"          username as string,",
-				"          password as string,",
-				"          phone as string,",
-				"          {__v} as boolean",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
