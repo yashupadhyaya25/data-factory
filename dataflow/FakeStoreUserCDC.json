@@ -30,7 +30,15 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          id as short,",
+				"          email as string,",
+				"          username as string,",
+				"          password as string,",
+				"          phone as string,",
+				"          {__v} as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     enableCdc: true,",
