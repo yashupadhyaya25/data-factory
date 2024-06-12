@@ -468,10 +468,7 @@
 														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
 														"type": "Expression"
 													},
-													"file_name": {
-														"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.csv')",
-														"type": "Expression"
-													}
+													"file_name": " "
 												},
 												"GoldLayer": {
 													"container": {
