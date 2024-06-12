@@ -467,8 +467,7 @@
 													"folder_path": {
 														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
 														"type": "Expression"
-													},
-													"file_name": " "
+													}
 												},
 												"GoldLayer": {
 													"container": {
