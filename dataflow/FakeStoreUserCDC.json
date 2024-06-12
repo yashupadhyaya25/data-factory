@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "PIIimplementation"
+				},
+				{
+					"name": "RemoveUnwantedColumns"
 				}
 			],
 			"scriptLines": [
@@ -32,7 +35,8 @@
 				"          email as string,",
 				"          username as string,",
 				"          password as string,",
-				"          phone as string",
+				"          phone as string,",
+				"          {__v} as boolean",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -40,9 +44,18 @@
 				"     enableCdc: true,",
 				"     mode: 'read',",
 				"     skipInitialLoad: false) ~> SilverLayer",
-				"SilverLayer derive(password = sha2(256, password),",
+				"RemoveUnwantedColumns derive(password = sha2(256, password),",
 				"          etl_load_date = currentUTC(),",
 				"          source = 'FAKESTORE') ~> PIIimplementation",
+				"SilverLayer select(mapColumn(",
+				"          id,",
+				"          email,",
+				"          username,",
+				"          password,",
+				"          phone",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RemoveUnwantedColumns",
 				"PIIimplementation sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
