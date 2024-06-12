@@ -459,6 +459,16 @@
 											"referenceName": "FakeStoreUserCDC",
 											"type": "DataFlowReference",
 											"datasetParameters": {
+												"SilverLayer": {
+													"container_name": {
+														"value": "@pipeline().parameters.gold_container_name",
+														"type": "Expression"
+													},
+													"folder_path": {
+														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
+														"type": "Expression"
+													}
+												},
 												"GoldLayer": {
 													"container": {
 														"value": "@pipeline().parameters.gold_container_name",
