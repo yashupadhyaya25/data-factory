@@ -645,7 +645,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "@concat('CALL RETAIL.PUBLIC.MERGE_USER();')",
+								"value": "@concat('CALL RETAIL.PUBLIC.merge_user','(''',pipeline().parameters.source_system,''');')",
 								"type": "Expression"
 							}
 						}
