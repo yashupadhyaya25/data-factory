@@ -449,7 +449,7 @@
 							"value": "FAKESTORE",
 							"activities": [
 								{
-									"name": "Fakestore CDC",
+									"name": "FakeStore Gold Layer",
 									"type": "ExecuteDataFlow",
 									"dependsOn": [],
 									"policy": {
@@ -467,7 +467,7 @@
 											"datasetParameters": {
 												"SilverLayer": {
 													"container_name": {
-														"value": "@pipeline().parameters.gold_container_name",
+														"value": "@pipeline().parameters.silver_container_name",
 														"type": "Expression"
 													},
 													"folder_path": {
@@ -484,10 +484,7 @@
 														"value": "@concat(pipeline().parameters.folder_path,'/',pipeline().parameters.source_system\n)",
 														"type": "Expression"
 													},
-													"file_name": {
-														"value": "@concat('user_data_',formatDateTime(utcnow(),'yyyy-MM-dd'),'.parquet')",
-														"type": "Expression"
-													}
+													"file_name": " "
 												}
 											}
 										},
@@ -495,10 +492,7 @@
 											"coreCount": 8,
 											"computeType": "General"
 										},
-										"traceLevel": "Fine",
-										"continuationSettings": {
-											"customizedCheckpointKey": "188ae1ce-69f6-49ab-95a0-3440a6415e3b"
-										}
+										"traceLevel": "Fine"
 									}
 								}
 							]
@@ -507,7 +501,7 @@
 							"value": "ESCUELAJS",
 							"activities": [
 								{
-									"name": "Gold Layer",
+									"name": "Escuelajs Gold Layer",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
